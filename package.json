@@ -1,0 +1,66 @@
+{
+  "name": "zotero-spotlight-search",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Zotero plugin that integrates Zotero with MacOS Spotlight Search.",
+  "config": {
+    "addonName": "Spotlight Search",
+    "addonID": "spotlight-search@euclpts.com",
+    "addonRef": "spotlightSearch",
+    "addonInstance": "SpotlightSearchPlugin",
+    "prefsPrefix": "extensions.spotlightSearch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/windingwind/zotero-spotlight-search.git"
+  },
+  "author": "windingwind",
+  "bugs": {
+    "url": "https://github.com/windingwind/zotero-spotlight-search/issues"
+  },
+  "homepage": "https://github.com/windingwind/zotero-spotlight-search#readme",
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "start": "zotero-plugin serve",
+    "build": "zotero-plugin build && tsc --noEmit",
+    "lint:check": "prettier --check . && eslint .",
+    "lint:fix": "prettier --write . && eslint . --fix",
+    "release": "zotero-plugin release",
+    "test": "zotero-plugin test",
+    "update-deps": "npm update --save",
+    "native:build": "cd native && bash build.sh",
+    "native:install": "cd native && bash install.sh",
+    "native:extract-icon": "cd native && bash extract-icon.sh"
+  },
+  "dependencies": {
+    "zotero-plugin-toolkit": "^5.1.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.10.13",
+    "@zotero-plugin/eslint-config": "^0.6.7",
+    "chai": "^6.2.2",
+    "eslint": "^9.39.3",
+    "mocha": "^11.7.5",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "zotero-plugin-scaffold": "^0.8.3",
+    "zotero-types": "^4.1.1"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "endOfLine": "lf",
+    "overrides": [
+      {
+        "files": [
+          "*.xhtml"
+        ],
+        "options": {
+          "htmlWhitespaceSensitivity": "css"
+        }
+      }
+    ]
+  }
+}

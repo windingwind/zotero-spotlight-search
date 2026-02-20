@@ -1,0 +1,25 @@
+<linkset>
+  <html:link rel="localization" href="__addonRef__-preferences.ftl" />
+</linkset>
+<groupbox>
+  <label><html:h2 data-l10n-id="pref-title"></html:h2></label>
+  <hbox align="center" style="gap: 6px">
+    <button
+      data-l10n-id="pref-install-zotlight"
+      oncommand="Zotero['__addonInstance__'].hooks.onPrefsEvent('install', {})"
+    />
+    <button
+      data-l10n-id="pref-open-zotlight"
+      oncommand="
+        Zotero['__addonInstance__'].hooks.onPrefsEvent('openConfig', {})
+      "
+    />
+    <spacer flex="1" />
+    <button
+      data-l10n-id="pref-uninstall-zotlight"
+      oncommand="
+        Zotero['__addonInstance__'].hooks.onPrefsEvent('uninstall', {})
+      "
+    />
+  </hbox>
+</groupbox>
