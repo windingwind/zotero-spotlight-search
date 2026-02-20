@@ -28,9 +28,11 @@ async function onStartup() {
 
   addon.data.initialized = true;
 
-  checkAndInstall({ silent: true }).catch((e) =>
-    ztoolkit.log(`[SpotlightSearch] ZotLight check failed: ${e}`),
-  );
+  checkAndInstall({ silent: true })
+    .then(() => scheduleSync())
+    .catch((e) =>
+      ztoolkit.log(`[SpotlightSearch] ZotLight check failed: ${e}`),
+    );
 }
 
 async function onMainWindowLoad(_win: _ZoteroTypes.MainWindow): Promise<void> {}
