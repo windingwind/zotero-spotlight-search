@@ -1,7 +1,7 @@
 {
   "name": "zotero-spotlight-search",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Zotero plugin that integrates Zotero with MacOS Spotlight Search.",
   "config": {
     "addonName": "Spotlight Search",
