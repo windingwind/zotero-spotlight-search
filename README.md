@@ -1,4 +1,4 @@
-# Zotero Spotlight Search
+# Spotlight Search for Zotero
 
 [![zotero target version](https://img.shields.io/badge/Zotero-8,9-green?style=flat-square&logo=zotero&logoColor=CC2936)](https://www.zotero.org)
 [![macOS only](https://img.shields.io/badge/macOS-only-lightgrey?style=flat-square&logo=apple)](https://www.apple.com/macos/)
