@@ -370,7 +370,6 @@ class SettingsWindowController: NSWindowController {
         let descTmpl  = descriptionTemplateField.stringValue.trimmingCharacters(in: .whitespaces)
         let newTitle  = titleTmpl.isEmpty ? Config.defaults.titleTemplate : titleTmpl
         let newDesc   = descTmpl.isEmpty  ? Config.defaults.descriptionTemplate : descTmpl
-        let templatesChanged = newTitle != config.titleTemplate || newDesc != config.descriptionTemplate
         config.titleTemplate = newTitle
         config.descriptionTemplate = newDesc
         config.save()
@@ -383,18 +382,14 @@ class SettingsWindowController: NSWindowController {
             Config.removeLaunchAgent()
         }
 
-        // Templates changed: clear old indexed entries and do a full re-sync now
-        if templatesChanged {
-            DispatchQueue.global().async {
-                clearSpotlightIndex()
-                clearVersionState()
-                runSync()
-                DispatchQueue.main.async {
-                    NSApplication.shared.terminate(nil)
-                }
+        // Any config change: clear old indexed entries and do a full re-sync now
+        DispatchQueue.global().async {
+            clearSpotlightIndex()
+            clearVersionState()
+            runSync()
+            DispatchQueue.main.async {
+                NSApplication.shared.terminate(nil)
             }
-        } else {
-            NSApplication.shared.terminate(nil)
         }
     }
 
