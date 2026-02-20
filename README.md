@@ -5,6 +5,9 @@
 
 Search your Zotero library directly from macOS Spotlight.
 
+<img width="686" height="513" alt="image" src="https://github.com/user-attachments/assets/1b8a9d79-1493-4340-9263-2ceb99b1a4d8" />
+
+
 ## How it works
 
 This plugin integrates Zotero library with macOS Spotlight Search. Search your library and groups in Spotlight even when Zotero is not running.
