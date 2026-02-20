@@ -18,14 +18,14 @@ The index is updated incrementally when your library changes. No background acti
 1. Install the plugin (`.xpi`) in Zotero via **Tools → Plugins**
 2. ZotLight.app is installed automatically in the background on first launch
    > For macOS restrictions, we must use an app to index the Zotero with Spotlight database. The app is built from source at runtime, see `native/` for details.
-3. Open **ZotLight.app Settings…** from Zotero **Preferences → Spotlight Search** to configure which fields to index
+3. Open **ZotLight.app Settings…** from Zotero **Settings → Spotlight Search** to configure which fields to index
 
 Your Zotero items will appear in Spotlight results shortly after.
 
 ## Settings
 
 - Install / Update ZotLight.app
-- Open ZotLight Settings
+- Open ZotLight.app Settings
 - Uninstall ZotLight.app
 
 ## Requirements
