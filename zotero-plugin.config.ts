@@ -1,6 +1,6 @@
 import { defineConfig } from "zotero-plugin-scaffold";
 import pkg from "./package.json";
-import { cpSync } from "fs";
+import { cpSync, readdirSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 export default defineConfig({
@@ -43,13 +43,31 @@ export default defineConfig({
       // Copy the entire native/ tree into the XPI as addon/zotlight/native/,
       // excluding build artifacts and local tooling dirs.
       "build:copyAssets": async (ctx) => {
-        cpSync(resolve("native"), resolve(ctx.dist, "addon/zotlight/native"), {
+        const destNative = resolve(ctx.dist, "addon/zotlight/native");
+        cpSync(resolve("native"), destNative, {
           recursive: true,
           filter: (src) =>
             !src.includes("/dist") &&
             !src.includes("/.claude") &&
             !src.endsWith("zotero.icns"),
         });
+
+        // Write a MANIFEST listing all relative file paths so the runtime
+        // can enumerate them via getContentsAsync (works with jar: URIs too).
+        const files: string[] = [];
+        const walk = (dir: string, prefix: string) => {
+          for (const entry of readdirSync(dir, { withFileTypes: true })) {
+            if (entry.name === ".DS_Store") continue;
+            const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+            if (entry.isDirectory()) walk(resolve(dir, entry.name), rel);
+            else files.push(rel);
+          }
+        };
+        walk(destNative, "");
+        writeFileSync(
+          resolve(destNative, "MANIFEST"),
+          files.sort().join("\n") + "\n",
+        );
       },
     },
   },

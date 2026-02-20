@@ -102,8 +102,7 @@ async function runUninstall(): Promise<void> {
     `zotlight-uninstall-${Date.now()}`,
   );
 
-  const nativeSrcPath = new URL(`${rootURI}zotlight/native`).pathname;
-  await Zotero.File.copyDirectory(nativeSrcPath, tmpDir);
+  await copyNativeDir(tmpDir);
 
   const r1 = await Zotero.Utilities.Internal.exec("/bin/chmod", [
     "+x",
@@ -132,16 +131,52 @@ async function getInstalledBuild(): Promise<number | null> {
   }
 }
 
+async function getContent(path: string): Promise<string> {
+  const content = await Zotero.File.getContentsAsync(path);
+  if (typeof content !== "string" && (content as any).responseText) {
+    // This happens when getContentsAsync hits the deprecated jar path.
+    // The responseText contains the file contents as a string, so
+    // this is still usable.
+    return (content as any).responseText || "";
+  }
+  return content as string;
+}
+
+// Copies the bundled zotlight/native/ tree to destDir. Uses the build-time
+// MANIFEST and Zotero.File.getContentsAsync so it works with both file://
+// (dev) and jar: (XPI install) rootURIs.
+async function copyNativeDir(destDir: string): Promise<void> {
+  // getContentsFromURL uses synchronous XHR which returns responseText as a
+  // plain string — works for both file:// (dev) and jar: (XPI) URIs.
+  // getContentsAsync must NOT be used here: for jar: URIs it hits a deprecated
+  // path that returns an XMLHttpRequest object instead of a string.
+  const nativeBase = `${rootURI}zotlight/native/`;
+  const manifest = await getContent(`${nativeBase}MANIFEST`);
+  for (const line of manifest.split("\n")) {
+    const relPath = line.trim();
+    if (!relPath) continue;
+
+    const destPath = PathUtils.join(destDir, ...relPath.split("/"));
+    const parentDir = PathUtils.parent(destPath);
+    if (parentDir) {
+      await IOUtils.makeDirectory(parentDir, {
+        createAncestors: true,
+        ignoreExisting: true,
+      });
+    }
+
+    const contents = await getContent(`${nativeBase}${relPath}`);
+    await IOUtils.writeUTF8(destPath, contents);
+  }
+}
+
 async function buildAndInstall(): Promise<void> {
   const tmpDir = PathUtils.join(
     PathUtils.tempDir,
     `zotlight-build-${Date.now()}`,
   );
 
-  // rootURI is always a file:// URL in Zotero; extract the filesystem path
-  // and use Zotero.File.copyDirectory to stage the whole native/ tree at once.
-  const nativeSrcPath = new URL(`${rootURI}zotlight/native`).pathname;
-  await Zotero.File.copyDirectory(nativeSrcPath, tmpDir);
+  await copyNativeDir(tmpDir);
 
   // Ensure shell scripts are executable after the directory copy
   for (const f of ["build.sh", "install.sh", "extract-icon.sh"]) {
