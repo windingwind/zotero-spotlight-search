@@ -1,5 +1,7 @@
-pref-title = Addon Template Example
-pref-enable =
-    .label = Enable
-pref-input = Input
-pref-help = { $name } Build { $version } { $time }
+pref-title = Spotlight Search
+pref-install-zotlight =
+    .label = Install / Update ZotLight…
+pref-open-zotlight =
+    .label = Open ZotLight Settings…
+pref-uninstall-zotlight =
+    .label = Uninstall ZotLight…

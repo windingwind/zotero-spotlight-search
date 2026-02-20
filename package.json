@@ -1,24 +1,24 @@
 {
-  "name": "zotero-plugin-template",
+  "name": "zotero-spotlight-search",
   "type": "module",
-  "version": "3.1.0",
-  "description": "Zotero Plugin Template",
+  "version": "1.0.0",
+  "description": "Zotero plugin that integrates Zotero with MacOS Spotlight Search.",
   "config": {
-    "addonName": "Zotero Plugin Template",
-    "addonID": "addontemplate@euclpts.com",
-    "addonRef": "addontemplate",
-    "addonInstance": "AddonTemplate",
-    "prefsPrefix": "extensions.zotero.addontemplate"
+    "addonName": "Spotlight Search",
+    "addonID": "spotlight-search@euclpts.com",
+    "addonRef": "spotlightSearch",
+    "addonInstance": "SpotlightSearchPlugin",
+    "prefsPrefix": "extensions.spotlightSearch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/windingwind/zotero-plugin-template.git"
+    "url": "git+https://github.com/wangxiangyu/zotero-spotlight-search.git"
   },
-  "author": "windingwind",
+  "author": "wangxiangyu",
   "bugs": {
-    "url": "https://github.com/windingwind/zotero-plugin-template/issues"
+    "url": "https://github.com/wangxiangyu/zotero-spotlight-search/issues"
   },
-  "homepage": "https://github.com/windingwind/zotero-plugin-template#readme",
+  "homepage": "https://github.com/wangxiangyu/zotero-spotlight-search#readme",
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "zotero-plugin serve",
@@ -27,7 +27,10 @@
     "lint:fix": "prettier --write . && eslint . --fix",
     "release": "zotero-plugin release",
     "test": "zotero-plugin test",
-    "update-deps": "npm update --save"
+    "update-deps": "npm update --save",
+    "native:build": "cd native && bash build.sh",
+    "native:install": "cd native && bash install.sh",
+    "native:extract-icon": "cd native && bash extract-icon.sh"
   },
   "dependencies": {
     "zotero-plugin-toolkit": "^5.1.0-beta.13"

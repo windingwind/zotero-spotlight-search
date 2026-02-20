@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>com.zotlight.app</string>
+
+    <key>CFBundleName</key>
+    <string>ZotLight</string>
+
+    <key>CFBundleExecutable</key>
+    <string>ZotLight</string>
+
+    <key>CFBundleVersion</key>
+    <string>3</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>1.2</string>
+
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <!-- No Dock icon -->
+    <key>LSUIElement</key>
+    <true/>
+
+    <key>LSMinimumSystemVersion</key>
+    <string>12.0</string>
+
+    <key>CFBundleIconFile</key>
+    <string>zotero</string>
+
+    <!-- Register as handler for Core Spotlight result clicks -->
+    <key>NSUserActivityTypes</key>
+    <array>
+        <string>com.apple.corespotlightitem</string>
+    </array>
+</dict>
+</plist>

@@ -1,5 +1,7 @@
 import { defineConfig } from "zotero-plugin-scaffold";
 import pkg from "./package.json";
+import { cpSync } from "fs";
+import { resolve } from "path";
 
 export default defineConfig({
   source: ["src", "addon"],
@@ -37,12 +39,22 @@ export default defineConfig({
         outfile: `.scaffold/build/addon/content/scripts/${pkg.config.addonRef}.js`,
       },
     ],
+    hooks: {
+      // Copy the entire native/ tree into the XPI as addon/zotlight/native/,
+      // excluding build artifacts and local tooling dirs.
+      "build:copyAssets": async (ctx) => {
+        cpSync(resolve("native"), resolve(ctx.dist, "addon/zotlight/native"), {
+          recursive: true,
+          filter: (src) =>
+            !src.includes("/dist") &&
+            !src.includes("/.claude") &&
+            !src.endsWith("zotero.icns"),
+        });
+      },
+    },
   },
 
   test: {
     waitForPlugin: `() => Zotero.${pkg.config.addonInstance}.data.initialized`,
   },
-
-  // If you need to see a more detailed log, uncomment the following line:
-  // logLevel: "trace",
 });
