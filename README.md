@@ -38,3 +38,5 @@ macOS only. Test on macOS Tahoe 26.2.
 ## License
 
 AGPL3
+
+LLM Usage Ack: This repo is coded with Claude Code. Manually reviewed as always, but no guarantee.
